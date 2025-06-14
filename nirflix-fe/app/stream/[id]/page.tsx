@@ -3,7 +3,7 @@ import Stream from "@/components/Stream";
 import { useParams } from "next/navigation";
 
 function Page() {
-  const {id}=useParams();
+  const {id}:{id:string}=useParams();
   return (
     <div>
 {

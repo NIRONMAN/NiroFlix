@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
@@ -7,7 +8,7 @@ import 'video.js/dist/video-js.css';
 const Stream = ({ id }: { id: string }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const playerRef = useRef<any>(null);
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
     // Ensure we're on the client
