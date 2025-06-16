@@ -1,24 +1,38 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { nixios } from "../lib/ApiClient";
 
 function Page() {
   const [movies, setMovies] = useState<MediaFile[]>([]);
   useEffect(() => {
     (async () => {
-      const res = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/movies/list",
-      );
-      setMovies(await res.json());
+      const res = await nixios.get("/api/movies/list");
+      if (res.ok) {
+        setMovies(res.data);
+      }
     })();
   }, []);
+  async function refreshDataBase() {
+    await nixios.get("/api/movies/updateDb");
+  }
   return (
     <div>
-      <h1>Welcome User</h1>
+      <div className=" p-4 flex">
+        {" "}
+        <h1 className="text-center flex-1 text-2xl text-red-500">
+          Welcome User
+        </h1>
+        <button onClick={refreshDataBase} className="p-2 rounded-md bg-white text-black">
+          Refresh List
+        </button>
+      </div>
       <div className=" grid grid-cols-4 gap-4 p-4">
-        {movies.map((ele) => {
-          return <MovieCard key={ele.id} {...ele}></MovieCard>;
-        })}
+        {movies &&
+          movies.length !== 0 &&
+          movies.map((ele) => {
+            return <MovieCard key={ele.id} {...ele}></MovieCard>;
+          })}
       </div>
     </div>
   );

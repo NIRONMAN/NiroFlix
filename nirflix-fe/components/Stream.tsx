@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
-import { useRef, useEffect, useState } from 'react';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+import { useRef, useEffect, useState } from "react";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 
 const Stream = ({ id }: { id: string }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -30,12 +30,13 @@ const Stream = ({ id }: { id: string }) => {
         sources: [
           {
             src: `${process.env.NEXT_PUBLIC_API_URL}/api/movies/stream?id=${id}`,
-            type: 'video/mp4',
+            type: "video/mp4",
           },
         ],
       });
 
       playerRef.current = player;
+      console.log(player.audioTracks());
     }
 
     return () => {

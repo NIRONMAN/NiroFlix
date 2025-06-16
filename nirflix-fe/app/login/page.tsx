@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 // pages/login.tsx
 import { useState } from 'react';
+import { nixios } from '../lib/ApiClient';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -10,13 +11,10 @@ const router=useRouter();
   const handleLogin =async (e: React.FormEvent) => {
     e.preventDefault();
     // Add your login logic here
-    const res=fetch(process.env.NEXT_PUBLIC_API_URL+"/api/auth/login",{
-      method:"POST",
-      body:JSON.stringify({
+    const res=nixios.post("/api/auth/login" ,{
         "username":"Niranjan",
         password:"12345"
       })
-    }) 
     if((await res).ok){
       router.push("/dashboard")
     }
